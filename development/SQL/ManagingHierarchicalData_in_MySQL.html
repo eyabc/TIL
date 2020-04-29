@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Managing Hierarchical Data in MySQL | EYABC</title>
+    <meta name="description" content="Today I Learned">
+    <meta name="generator" content="VuePress 1.4.0">
+    
+    
+    <link rel="preload" href="/TIL/assets/css/0.styles.cb572f56.css" as="style"><link rel="preload" href="/TIL/assets/js/app.5a4e5c77.js" as="script"><link rel="preload" href="/TIL/assets/js/3.a0601c32.js" as="script"><link rel="preload" href="/TIL/assets/js/2.fbb9d6f8.js" as="script"><link rel="preload" href="/TIL/assets/js/4.66ba9c00.js" as="script"><link rel="preload" href="/TIL/assets/js/12.8a097140.js" as="script"><link rel="prefetch" href="/TIL/assets/js/10.46199566.js"><link rel="prefetch" href="/TIL/assets/js/11.c4625da8.js"><link rel="prefetch" href="/TIL/assets/js/13.fe420e48.js"><link rel="prefetch" href="/TIL/assets/js/14.8b517448.js"><link rel="prefetch" href="/TIL/assets/js/15.28cd064c.js"><link rel="prefetch" href="/TIL/assets/js/16.e46cc98f.js"><link rel="prefetch" href="/TIL/assets/js/17.c7b32500.js"><link rel="prefetch" href="/TIL/assets/js/18.589c107f.js"><link rel="prefetch" href="/TIL/assets/js/19.70711bf1.js"><link rel="prefetch" href="/TIL/assets/js/20.87f00ae2.js"><link rel="prefetch" href="/TIL/assets/js/21.a2af2bfc.js"><link rel="prefetch" href="/TIL/assets/js/22.2b916cab.js"><link rel="prefetch" href="/TIL/assets/js/23.822b24cb.js"><link rel="prefetch" href="/TIL/assets/js/24.b5c751ca.js"><link rel="prefetch" href="/TIL/assets/js/25.4d0206ca.js"><link rel="prefetch" href="/TIL/assets/js/26.c21a6956.js"><link rel="prefetch" href="/TIL/assets/js/27.4e73bc0b.js"><link rel="prefetch" href="/TIL/assets/js/28.0d2a5d34.js"><link rel="prefetch" href="/TIL/assets/js/29.094a2343.js"><link rel="prefetch" href="/TIL/assets/js/30.f49087fc.js"><link rel="prefetch" href="/TIL/assets/js/31.6cfaabb5.js"><link rel="prefetch" href="/TIL/assets/js/32.a7967f50.js"><link rel="prefetch" href="/TIL/assets/js/33.e3c40e16.js"><link rel="prefetch" href="/TIL/assets/js/34.58061356.js"><link rel="prefetch" href="/TIL/assets/js/35.da0bd1c9.js"><link rel="prefetch" href="/TIL/assets/js/36.a4bd4328.js"><link rel="prefetch" href="/TIL/assets/js/37.f238f15e.js"><link rel="prefetch" href="/TIL/assets/js/38.400fa4d5.js"><link rel="prefetch" href="/TIL/assets/js/39.526fc600.js"><link rel="prefetch" href="/TIL/assets/js/40.b59e7209.js"><link rel="prefetch" href="/TIL/assets/js/41.9f034671.js"><link rel="prefetch" href="/TIL/assets/js/42.a2da7f98.js"><link rel="prefetch" href="/TIL/assets/js/43.5c9ef137.js"><link rel="prefetch" href="/TIL/assets/js/44.8ae61dad.js"><link rel="prefetch" href="/TIL/assets/js/45.33aa3e9e.js"><link rel="prefetch" href="/TIL/assets/js/46.92f6bbf5.js"><link rel="prefetch" href="/TIL/assets/js/47.fc59bbd7.js"><link rel="prefetch" href="/TIL/assets/js/48.1e586d5c.js"><link rel="prefetch" href="/TIL/assets/js/49.c40ff0eb.js"><link rel="prefetch" href="/TIL/assets/js/5.88eeb0f0.js"><link rel="prefetch" href="/TIL/assets/js/50.61ebc858.js"><link rel="prefetch" href="/TIL/assets/js/51.6c2a74e6.js"><link rel="prefetch" href="/TIL/assets/js/52.08409414.js"><link rel="prefetch" href="/TIL/assets/js/53.d35e237d.js"><link rel="prefetch" href="/TIL/assets/js/54.32cf3626.js"><link rel="prefetch" href="/TIL/assets/js/55.465e7b98.js"><link rel="prefetch" href="/TIL/assets/js/56.a813e4f3.js"><link rel="prefetch" href="/TIL/assets/js/57.d1c0091a.js"><link rel="prefetch" href="/TIL/assets/js/58.d517020a.js"><link rel="prefetch" href="/TIL/assets/js/59.369a0c56.js"><link rel="prefetch" href="/TIL/assets/js/6.ea43515f.js"><link rel="prefetch" href="/TIL/assets/js/60.aa5c40e9.js"><link rel="prefetch" href="/TIL/assets/js/61.c330ebe3.js"><link rel="prefetch" href="/TIL/assets/js/62.04acf197.js"><link rel="prefetch" href="/TIL/assets/js/63.9c74fa4d.js"><link rel="prefetch" href="/TIL/assets/js/64.6766f446.js"><link rel="prefetch" href="/TIL/assets/js/65.c2686502.js"><link rel="prefetch" href="/TIL/assets/js/66.10a01df9.js"><link rel="prefetch" href="/TIL/assets/js/67.2a5c1c56.js"><link rel="prefetch" href="/TIL/assets/js/68.120576cc.js"><link rel="prefetch" href="/TIL/assets/js/69.289d595d.js"><link rel="prefetch" href="/TIL/assets/js/7.47a3f457.js"><link rel="prefetch" href="/TIL/assets/js/70.fe89b6c8.js"><link rel="prefetch" href="/TIL/assets/js/71.13f79a15.js"><link rel="prefetch" href="/TIL/assets/js/72.a55c93c5.js"><link rel="prefetch" href="/TIL/assets/js/73.73a2f119.js"><link rel="prefetch" href="/TIL/assets/js/74.e3dbd9b3.js"><link rel="prefetch" href="/TIL/assets/js/75.71aa054d.js"><link rel="prefetch" href="/TIL/assets/js/76.c7811ffb.js"><link rel="prefetch" href="/TIL/assets/js/77.a6f35f8f.js"><link rel="prefetch" href="/TIL/assets/js/78.2d155a7b.js"><link rel="prefetch" href="/TIL/assets/js/79.0772a04c.js"><link rel="prefetch" href="/TIL/assets/js/8.8ce8ad2b.js"><link rel="prefetch" href="/TIL/assets/js/80.2ca230ee.js"><link rel="prefetch" href="/TIL/assets/js/81.26a4c46c.js"><link rel="prefetch" href="/TIL/assets/js/82.2d091af2.js"><link rel="prefetch" href="/TIL/assets/js/83.b7571185.js"><link rel="prefetch" href="/TIL/assets/js/84.7e2265ca.js"><link rel="prefetch" href="/TIL/assets/js/85.3a6c4da1.js"><link rel="prefetch" href="/TIL/assets/js/86.4f6c8f33.js"><link rel="prefetch" href="/TIL/assets/js/87.20bf0c3d.js"><link rel="prefetch" href="/TIL/assets/js/88.47b34076.js"><link rel="prefetch" href="/TIL/assets/js/89.a1132a74.js"><link rel="prefetch" href="/TIL/assets/js/9.7a011b3d.js">
+    <link rel="stylesheet" href="/TIL/assets/css/0.styles.cb572f56.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/TIL/" class="home-link router-link-active"><!----> <span class="site-name">EYABC</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/TIL/" class="nav-link">Home
+</a></div><div class="nav-item"><a href="https://github.com/eyabc/TIL/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+    Repository
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/TIL/" class="nav-link">Home
+</a></div><div class="nav-item"><a href="https://github.com/eyabc/TIL/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+    Repository
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/TIL/" class="sidebar-link">Home</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JavaScript</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>React</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>CSS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>TERM</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Tools</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Design Patterns</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Interview</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>ETC</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Study Money Project</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>React Native</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>SQL</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/TIL/development/SQL/SQL_Cheat_Sheet.html" class="sidebar-link">SQL Cheat Sheet</a></li><li><a href="/TIL/development/SQL/ManagingHierarchicalData_in_MySQL.html" class="active sidebar-link">Managing Hierarchical Data in MySQL</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/TIL/development/SQL/ManagingHierarchicalData_in_MySQL.html#adjacency-list-model-인접-목록-모델" class="sidebar-link">ADJACENCY LIST MODEL 인접 목록 모델</a></li><li class="sidebar-sub-header"><a href="/TIL/development/SQL/ManagingHierarchicalData_in_MySQL.html#nested-set-model-중첩-세트-모델" class="sidebar-link">Nested Set Model 중첩 세트 모델</a></li></ul></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Java</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Algorithm</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Vue</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Book</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>유튜브 클론 코딩</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="managing-hierarchical-data-in-mysql"><a href="#managing-hierarchical-data-in-mysql" class="header-anchor">#</a> <a href="http://mikehillyer.com/articles/managing-hierarchical-data-in-mysql/" target="_blank" rel="noopener noreferrer">Managing Hierarchical Data in MySQL<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></h1> <p>계층적 데이터 관리는 관계형데이터베이스의 목적이 아니다.
+전통적인 인접 목록 모델에서 시작하여 MySql에서 계층적 데이터를 다루기 위한 두가지 모델을 소개한다.</p> <h2 id="adjacency-list-model-인접-목록-모델"><a href="#adjacency-list-model-인접-목록-모델" class="header-anchor">#</a> ADJACENCY LIST MODEL 인접 목록 모델</h2> <p><img src="data:image/png;base64,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" alt="ADJACENCY LIST MODEL"></p> <div class="language-shell script extra-class"><pre class="language-shell"><code>CREATE TABLE category <span class="token punctuation">(</span> 
+        category_id INT AUTO_INCREMENT 기본 키, 
+        이름 VARCHAR <span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> NOT NULL, 
+        부모 INT DEFAULT NULL 
+<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+범주 값에 삽입 <span class="token punctuation">(</span><span class="token number">1</span>, <span class="token string">'ELECTRONICS'</span>, NULL<span class="token punctuation">)</span>, <span class="token punctuation">(</span><span class="token number">2</span>, <span class="token string">'TELEVISIONS'</span>, <span class="token number">1</span><span class="token punctuation">)</span>, <span class="token punctuation">(</span><span class="token number">3</span>, <span class="token string">'TUBE'</span>, <span class="token number">2</span><span class="token punctuation">)</span>, 
+        <span class="token punctuation">(</span><span class="token number">4</span>, <span class="token string">'LCD'</span>, <span class="token number">2</span><span class="token punctuation">)</span>, <span class="token punctuation">(</span><span class="token number">5</span>, <span class="token string">'PLASMA'</span> , <span class="token number">2</span><span class="token punctuation">)</span>, <span class="token punctuation">(</span><span class="token number">6</span>, <span class="token string">'휴대용 전자 제품'</span>, <span class="token number">1</span><span class="token punctuation">)</span>, <span class="token punctuation">(</span><span class="token number">7</span>, <span class="token string">'MP3 플레이어'</span>, <span class="token number">6</span><span class="token punctuation">)</span>, <span class="token punctuation">(</span><span class="token number">8</span>, <span class="token string">'플래시'</span>, <span class="token number">7</span><span class="token punctuation">)</span>, 
+        <span class="token punctuation">(</span><span class="token number">9</span>, <span class="token string">'CD 플레이어'</span>, <span class="token number">6</span><span class="token punctuation">)</span>, <span class="token punctuation">(</span><span class="token number">10</span>, <span class="token string">'2 웨이 라디오'</span>, <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+SELECT * FROM 카테고리 ORDER BY category_id<span class="token punctuation">;</span> 
++ ------------- + ---------------------- + -------- + 
+<span class="token operator">|</span> category_id <span class="token operator">|</span> 이름 <span class="token operator">|</span> 부모 <span class="token operator">|</span> 
++ ------------- + ---------------------- + -------- + 
+<span class="token operator">|</span> <span class="token number">1</span> <span class="token operator">|</span> 전자 제품 <span class="token operator">|</span> NULL <span class="token operator">|</span> 
+<span class="token operator">|</span> <span class="token number">2</span> <span class="token operator">|</span> 텔레비전 <span class="token operator">|</span> <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">3</span> <span class="token operator">|</span> 관 <span class="token operator">|</span> <span class="token number">2</span> <span class="token operator">|</span> 
+<span class="token operator">|</span> <span class="token number">4</span> <span class="token operator">|</span> LCD <span class="token operator">|</span> <span class="token number">2</span> <span class="token operator">|</span> 
+<span class="token operator">|</span> <span class="token number">5</span> <span class="token operator">|</span> 플라즈마 <span class="token operator">|</span> <span class="token number">2</span> <span class="token operator">|</span> 
+<span class="token operator">|</span> <span class="token number">6</span> <span class="token operator">|</span> 휴대용 전자 제품 <span class="token operator">|</span> <span class="token number">1</span> <span class="token operator">|</span> 
+<span class="token operator">|</span> <span class="token number">7</span> <span class="token operator">|</span> MP3 플레이어 <span class="token operator">|</span> <span class="token number">6</span> <span class="token operator">|</span> 
+<span class="token operator">|</span> <span class="token number">8</span> <span class="token operator">|</span> 플래시 <span class="token operator">|</span> <span class="token number">7</span> <span class="token operator">|</span> 
+<span class="token operator">|</span> <span class="token number">9</span> <span class="token operator">|</span> CD 플레이어 <span class="token operator">|</span> <span class="token number">6</span> <span class="token operator">|</span> 
+<span class="token operator">|</span> <span class="token number">10</span> <span class="token operator">|</span> <span class="token number">2</span> 웨이 라디오 <span class="token operator">|</span> <span class="token number">6</span> <span class="token operator">|</span> 
++ ------------- + ---------------------- + -------- + 
+<span class="token number">10</span> 행 세트 <span class="token punctuation">(</span><span class="token number">0.00</span> 초<span class="token punctuation">)</span>
+</code></pre></div><ul><li>각 항목에는 상위 항목에 대한 포인터가 존재한다. 최상위 요소일 경우 상위요소에 대해 NULL 이다.</li> <li>매우 간단</li> <li>클라이언트측 코드에서는 상당히 쉽게 처리할 수 있지만 순수 SQL에서는 모델 작업이 문제가 될 수 있다.</li></ul> <h3 id="전체-트리-검색"><a href="#전체-트리-검색" class="header-anchor">#</a> 전체 트리 검색</h3> <p>계층적 데이터를 처리할 때,
+전체 트리 표시를 가장 먼저 한다.</p> <ul><li>순수 SQL에서 자체 조인을 사용하는것이 가장 일반적이다.</li></ul> <div class="language-shell script extra-class"><pre class="language-shell"><code>SELECT t1.name AS lev1, t2.name as lev2, t3.name as lev3, t4.name as lev4
+FROM category AS t1
+LEFT JOIN category AS t2 ON t2.parent <span class="token operator">=</span> t1.category_id
+LEFT JOIN category AS t3 ON t3.parent <span class="token operator">=</span> t2.category_id
+LEFT JOIN category AS t4 ON t4.parent <span class="token operator">=</span> t3.category_id
+WHERE t1.name <span class="token operator">=</span> <span class="token string">'ELECTRONICS'</span><span class="token punctuation">;</span>
+
++-------------+----------------------+--------------+-------+
+<span class="token operator">|</span> lev1        <span class="token operator">|</span> lev2                 <span class="token operator">|</span> lev3         <span class="token operator">|</span> lev4  <span class="token operator">|</span>
++-------------+----------------------+--------------+-------+
+<span class="token operator">|</span> ELECTRONICS <span class="token operator">|</span> TELEVISIONS          <span class="token operator">|</span> TUBE         <span class="token operator">|</span> NULL  <span class="token operator">|</span>
+<span class="token operator">|</span> ELECTRONICS <span class="token operator">|</span> TELEVISIONS          <span class="token operator">|</span> LCD          <span class="token operator">|</span> NULL  <span class="token operator">|</span>
+<span class="token operator">|</span> ELECTRONICS <span class="token operator">|</span> TELEVISIONS          <span class="token operator">|</span> PLASMA       <span class="token operator">|</span> NULL  <span class="token operator">|</span>
+<span class="token operator">|</span> ELECTRONICS <span class="token operator">|</span> PORTABLE ELECTRONICS <span class="token operator">|</span> MP3 PLAYERS  <span class="token operator">|</span> FLASH <span class="token operator">|</span>
+<span class="token operator">|</span> ELECTRONICS <span class="token operator">|</span> PORTABLE ELECTRONICS <span class="token operator">|</span> CD PLAYERS   <span class="token operator">|</span> NULL  <span class="token operator">|</span>
+<span class="token operator">|</span> ELECTRONICS <span class="token operator">|</span> PORTABLE ELECTRONICS <span class="token operator">|</span> <span class="token number">2</span> WAY RADIOS <span class="token operator">|</span> NULL  <span class="token operator">|</span>
++-------------+----------------------+--------------+-------+
+<span class="token number">6</span> rows <span class="token keyword">in</span> <span class="token builtin class-name">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre></div><h3 id="모든-리프-노트-찾기"><a href="#모든-리프-노트-찾기" class="header-anchor">#</a> 모든 리프 노트 찾기</h3> <ul><li>left join 을 사용하여 트리에서 하위노드가 없는 모든 리프 노드를 찾을 수 있다.</li></ul> <div class="language-shell script extra-class"><pre class="language-shell"><code>SELECT t1.name FROM
+category AS t1 LEFT JOIN category as t2
+ON t1.category_id <span class="token operator">=</span> t2.parent
+WHERE t2.category_id IS NULL<span class="token punctuation">;</span>
+
++--------------+
+<span class="token operator">|</span> name         <span class="token operator">|</span>
++--------------+
+<span class="token operator">|</span> TUBE         <span class="token operator">|</span>
+<span class="token operator">|</span> LCD          <span class="token operator">|</span>
+<span class="token operator">|</span> PLASMA       <span class="token operator">|</span>
+<span class="token operator">|</span> FLASH        <span class="token operator">|</span>
+<span class="token operator">|</span> CD PLAYERS   <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2</span> WAY RADIOS <span class="token operator">|</span>
++--------------+
+</code></pre></div><h3 id="단일-경로-검색"><a href="#단일-경로-검색" class="header-anchor">#</a> 단일 경로 검색</h3> <div class="language-shell script extra-class"><pre class="language-shell"><code>   SELECT t1.name AS lev1, t2.name as lev2, t3.name as lev3, t4.name as lev4
+   FROM category AS t1
+   LEFT JOIN category AS t2 ON t2.parent <span class="token operator">=</span> t1.category_id
+   LEFT JOIN category AS t3 ON t3.parent <span class="token operator">=</span> t2.category_id
+   LEFT JOIN category AS t4 ON t4.parent <span class="token operator">=</span> t3.category_id
+   WHERE t1.name <span class="token operator">=</span> <span class="token string">'ELECTRONICS'</span> AND t4.name <span class="token operator">=</span> <span class="token string">'FLASH'</span><span class="token punctuation">;</span>
+   
+   +-------------+----------------------+-------------+-------+
+   <span class="token operator">|</span> lev1        <span class="token operator">|</span> lev2                 <span class="token operator">|</span> lev3        <span class="token operator">|</span> lev4  <span class="token operator">|</span>
+   +-------------+----------------------+-------------+-------+
+   <span class="token operator">|</span> ELECTRONICS <span class="token operator">|</span> PORTABLE ELECTRONICS <span class="token operator">|</span> MP3 PLAYERS <span class="token operator">|</span> FLASH <span class="token operator">|</span>
+   +-------------+----------------------+-------------+-------+
+   <span class="token number">1</span> row <span class="token keyword">in</span> <span class="token builtin class-name">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
+</code></pre></div><p>모든 수준 하나하나에 저체 조인이 필요하며 결합이 복잡해짐에 따라 성능이 저하된다.</p> <h3 id="인접성-목록-모델의-한계"><a href="#인접성-목록-모델의-한계" class="header-anchor">#</a> 인접성 목록 모델의 한계</h3> <ol><li>카테고리의 전체 경로를 보기 전에 카테고리의 레벨을 알아야 한다.</li> <li>노드를 삭제할 때 특별한 주의가 필요하다.</li></ol> <ul><li>절차적 프로그래밍을 사용하여 트리의 맨 아래에서 시작하여 위쪽으로 반복하여 경로를 반환할 수 있다.</li> <li>하나의 하위 요소를 승격시키고 나머지 하위를 새 상위를 가리키도록 재정렬하여 삭제할수 있다.</li></ul> <h2 id="nested-set-model-중첩-세트-모델"><a href="#nested-set-model-중첩-세트-모델" class="header-anchor">#</a> Nested Set Model 중첩 세트 모델</h2> <p><img src="/TIL/assets/img/nested_categories.71613a3d.png" alt="nested_categroies"></p> <ul><li>노드와 선이 아 중첩 컨테이너로의 계층 방식</li> <li>노드의 중첩을 나타내는 왼쪽 및 오른쪽 값을 사용하여이 형식의 계층 구조를 테이블에 나타냅니다.</li></ul> <div class="language-shell script extra-class"><pre class="language-shell"><code>CREATE TABLE nested_category <span class="token punctuation">(</span>
+        category_id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> NOT NULL,
+        lft INT NOT NULL,
+        rgt INT NOT NULL
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+INSERT INTO nested_category VALUES<span class="token punctuation">(</span><span class="token number">1</span>,<span class="token string">'ELECTRONICS'</span>,1,20<span class="token punctuation">)</span>,<span class="token punctuation">(</span><span class="token number">2</span>,<span class="token string">'TELEVISIONS'</span>,2,9<span class="token punctuation">)</span>,<span class="token punctuation">(</span><span class="token number">3</span>,<span class="token string">'TUBE'</span>,3,4<span class="token punctuation">)</span>,
+ <span class="token punctuation">(</span><span class="token number">4</span>,<span class="token string">'LCD'</span>,5,6<span class="token punctuation">)</span>,<span class="token punctuation">(</span><span class="token number">5</span>,<span class="token string">'PLASMA'</span>,7,8<span class="token punctuation">)</span>,<span class="token punctuation">(</span><span class="token number">6</span>,<span class="token string">'PORTABLE ELECTRONICS'</span>,10,19<span class="token punctuation">)</span>,<span class="token punctuation">(</span><span class="token number">7</span>,<span class="token string">'MP3 PLAYERS'</span>,11,14<span class="token punctuation">)</span>,<span class="token punctuation">(</span><span class="token number">8</span>,<span class="token string">'FLASH'</span>,12,13<span class="token punctuation">)</span>,
+ <span class="token punctuation">(</span><span class="token number">9</span>,<span class="token string">'CD PLAYERS'</span>,15,16<span class="token punctuation">)</span>,<span class="token punctuation">(</span><span class="token number">10</span>,<span class="token string">'2 WAY RADIOS'</span>,17,18<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+SELECT * FROM nested_category ORDER BY category_id<span class="token punctuation">;</span>
+
++-------------+----------------------+-----+-----+
+<span class="token operator">|</span> category_id <span class="token operator">|</span> name                 <span class="token operator">|</span> lft <span class="token operator">|</span> rgt <span class="token operator">|</span>
++-------------+----------------------+-----+-----+
+<span class="token operator">|</span>           <span class="token number">1</span> <span class="token operator">|</span> ELECTRONICS          <span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span>  <span class="token number">20</span> <span class="token operator">|</span>
+<span class="token operator">|</span>           <span class="token number">2</span> <span class="token operator">|</span> TELEVISIONS          <span class="token operator">|</span>   <span class="token number">2</span> <span class="token operator">|</span>   <span class="token number">9</span> <span class="token operator">|</span>
+<span class="token operator">|</span>           <span class="token number">3</span> <span class="token operator">|</span> TUBE                 <span class="token operator">|</span>   <span class="token number">3</span> <span class="token operator">|</span>   <span class="token number">4</span> <span class="token operator">|</span>
+<span class="token operator">|</span>           <span class="token number">4</span> <span class="token operator">|</span> LCD                  <span class="token operator">|</span>   <span class="token number">5</span> <span class="token operator">|</span>   <span class="token number">6</span> <span class="token operator">|</span>
+<span class="token operator">|</span>           <span class="token number">5</span> <span class="token operator">|</span> PLASMA               <span class="token operator">|</span>   <span class="token number">7</span> <span class="token operator">|</span>   <span class="token number">8</span> <span class="token operator">|</span>
+<span class="token operator">|</span>           <span class="token number">6</span> <span class="token operator">|</span> PORTABLE ELECTRONICS <span class="token operator">|</span>  <span class="token number">10</span> <span class="token operator">|</span>  <span class="token number">19</span> <span class="token operator">|</span>
+<span class="token operator">|</span>           <span class="token number">7</span> <span class="token operator">|</span> MP3 PLAYERS          <span class="token operator">|</span>  <span class="token number">11</span> <span class="token operator">|</span>  <span class="token number">14</span> <span class="token operator">|</span>
+<span class="token operator">|</span>           <span class="token number">8</span> <span class="token operator">|</span> FLASH                <span class="token operator">|</span>  <span class="token number">12</span> <span class="token operator">|</span>  <span class="token number">13</span> <span class="token operator">|</span>
+<span class="token operator">|</span>           <span class="token number">9</span> <span class="token operator">|</span> CD PLAYERS           <span class="token operator">|</span>  <span class="token number">15</span> <span class="token operator">|</span>  <span class="token number">16</span> <span class="token operator">|</span>
+<span class="token operator">|</span>          <span class="token number">10</span> <span class="token operator">|</span> <span class="token number">2</span> WAY RADIOS         <span class="token operator">|</span>  <span class="token number">17</span> <span class="token operator">|</span>  <span class="token number">18</span> <span class="token operator">|</span>
++-------------+----------------------+-----+-----+
+</code></pre></div><ul><li><p>왼쪽 오른쪽 값의 결정 : 노드의 가장 왼쪽부터 번호를 매긴다.
+<img src="/TIL/assets/img/nested_numbered.05c34c80.png" alt="nested_numbered"></p></li> <li><p>트리에 적용 -&gt; modified preorder tree traversal algorithm.
+<img src="/TIL/assets/img/numbered_tree.6fb51bb4.png" alt="numbered_tree"></p></li></ul> <h3 id="전체-트리-검색-2"><a href="#전체-트리-검색-2" class="header-anchor">#</a> 전체 트리 검색</h3> <ul><li>노드의 lft 값이 항상 부모의 lft 보다 크고 rgt 보다 작다</li> <li>부모와 노드를 연결하는 self 조인을 사용하여 전체 트리를 검색한다.</li> <li>트리 깊이에 상관없이 작동한다.</li></ul> <div class="language-shell script extra-class"><pre class="language-shell"><code>SELECT node.name
+FROM nested_category AS node,
+        nested_category AS parent
+WHERE node.lft BETWEEN parent.lft AND parent.rgt
+        AND parent.name <span class="token operator">=</span> <span class="token string">'ELECTRONICS'</span>
+ORDER BY node.lft<span class="token punctuation">;</span>
+
++----------------------+
+<span class="token operator">|</span> name                 <span class="token operator">|</span>
++----------------------+
+<span class="token operator">|</span> ELECTRONICS          <span class="token operator">|</span>
+<span class="token operator">|</span> TELEVISIONS          <span class="token operator">|</span>
+<span class="token operator">|</span> TUBE                 <span class="token operator">|</span>
+<span class="token operator">|</span> LCD                  <span class="token operator">|</span>
+<span class="token operator">|</span> PLASMA               <span class="token operator">|</span>
+<span class="token operator">|</span> PORTABLE ELECTRONICS <span class="token operator">|</span>
+<span class="token operator">|</span> MP3 PLAYERS          <span class="token operator">|</span>
+<span class="token operator">|</span> FLASH                <span class="token operator">|</span>
+<span class="token operator">|</span> CD PLAYERS           <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2</span> WAY RADIOS         <span class="token operator">|</span>
++----------------------+
+</code></pre></div><h3 id="모든-리프-노드-찾기"><a href="#모든-리프-노드-찾기" class="header-anchor">#</a> 모든 리프 노드 찾기</h3> <div class="language-shell script extra-class"><pre class="language-shell"><code>SELECT name
+FROM nested_category
+WHERE rgt <span class="token operator">=</span> lft + <span class="token number">1</span><span class="token punctuation">;</span>
+
++--------------+
+<span class="token operator">|</span> name         <span class="token operator">|</span>
++--------------+
+<span class="token operator">|</span> TUBE         <span class="token operator">|</span>
+<span class="token operator">|</span> LCD          <span class="token operator">|</span>
+<span class="token operator">|</span> PLASMA       <span class="token operator">|</span>
+<span class="token operator">|</span> FLASH        <span class="token operator">|</span>
+<span class="token operator">|</span> CD PLAYERS   <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2</span> WAY RADIOS <span class="token operator">|</span>
++--------------+
+</code></pre></div><h3 id="단일-경로-검색-2"><a href="#단일-경로-검색-2" class="header-anchor">#</a> 단일 경로 검색</h3> <div class="language-shell script extra-class"><pre class="language-shell"><code>SELECT parent.name
+FROM nested_category AS node,
+        nested_category AS parent
+WHERE node.lft BETWEEN parent.lft AND parent.rgt
+        AND node.name <span class="token operator">=</span> <span class="token string">'FLASH'</span>
+ORDER BY parent.lft<span class="token punctuation">;</span>
+
++----------------------+
+<span class="token operator">|</span> name                 <span class="token operator">|</span>
++----------------------+
+<span class="token operator">|</span> ELECTRONICS          <span class="token operator">|</span>
+<span class="token operator">|</span> PORTABLE ELECTRONICS <span class="token operator">|</span>
+<span class="token operator">|</span> MP3 PLAYERS          <span class="token operator">|</span>
+<span class="token operator">|</span> FLASH                <span class="token operator">|</span>
++----------------------+
+</code></pre></div><h3 id="노드의-깊이-찾기"><a href="#노드의-깊이-찾기" class="header-anchor">#</a> 노드의 깊이 찾기</h3> <div class="language-shell script extra-class"><pre class="language-shell"><code>SELECT node.name, <span class="token punctuation">(</span>COUNT<span class="token punctuation">(</span>parent.name<span class="token punctuation">)</span> - <span class="token number">1</span><span class="token punctuation">)</span> AS depth
+FROM nested_category AS node,
+        nested_category AS parent
+WHERE node.lft BETWEEN parent.lft AND parent.rgt
+GROUP BY node.name
+ORDER BY node.lft<span class="token punctuation">;</span>
+
++----------------------+-------+
+<span class="token operator">|</span> name                 <span class="token operator">|</span> depth <span class="token operator">|</span>
++----------------------+-------+
+<span class="token operator">|</span> ELECTRONICS          <span class="token operator">|</span>     <span class="token number">0</span> <span class="token operator">|</span>
+<span class="token operator">|</span> TELEVISIONS          <span class="token operator">|</span>     <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">|</span> TUBE                 <span class="token operator">|</span>     <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span> LCD                  <span class="token operator">|</span>     <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span> PLASMA               <span class="token operator">|</span>     <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span> PORTABLE ELECTRONICS <span class="token operator">|</span>     <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">|</span> MP3 PLAYERS          <span class="token operator">|</span>     <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span> FLASH                <span class="token operator">|</span>     <span class="token number">3</span> <span class="token operator">|</span>
+<span class="token operator">|</span> CD PLAYERS           <span class="token operator">|</span>     <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2</span> WAY RADIOS         <span class="token operator">|</span>     <span class="token number">2</span> <span class="token operator">|</span>
++----------------------+-------+
+</code></pre></div><ul><li>concat, repeat 함수로 카테고리 이름을 들여쓰기 할 수 있다.</li></ul> <div class="language-shell script extra-class"><pre class="language-shell"><code>SELECT CONCAT<span class="token punctuation">(</span> REPEAT<span class="token punctuation">(</span><span class="token string">' '</span>, COUNT<span class="token punctuation">(</span>parent.name<span class="token punctuation">)</span> - <span class="token number">1</span><span class="token punctuation">)</span>, node.name<span class="token punctuation">)</span> AS name
+FROM nested_category AS node,
+        nested_category AS parent
+WHERE node.lft BETWEEN parent.lft AND parent.rgt
+GROUP BY node.name
+ORDER BY node.lft<span class="token punctuation">;</span>
+
++-----------------------+
+<span class="token operator">|</span> name                  <span class="token operator">|</span>
++-----------------------+
+<span class="token operator">|</span> ELECTRONICS           <span class="token operator">|</span>
+<span class="token operator">|</span>  TELEVISIONS          <span class="token operator">|</span>
+<span class="token operator">|</span>   TUBE                <span class="token operator">|</span>
+<span class="token operator">|</span>   LCD                 <span class="token operator">|</span>
+<span class="token operator">|</span>   PLASMA              <span class="token operator">|</span>
+<span class="token operator">|</span>  PORTABLE ELECTRONICS <span class="token operator">|</span>
+<span class="token operator">|</span>   MP3 PLAYERS         <span class="token operator">|</span>
+<span class="token operator">|</span>    FLASH              <span class="token operator">|</span>
+<span class="token operator">|</span>   CD PLAYERS          <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">2</span> WAY RADIOS        <span class="token operator">|</span>
++-----------------------+
+</code></pre></div><h3 id="서브-트리의-깊이"><a href="#서브-트리의-깊이" class="header-anchor">#</a> 서브 트리의 깊이</h3> <ul><li>하위 쿼리와 함께 세 번째 self 조인을 추가하여 하위 트리 새로운 시작점이 될 깊이를 결정한다.</li></ul> <div class="language-shell script extra-class"><pre class="language-shell"><code>ELECT node.name, <span class="token punctuation">(</span>COUNT<span class="token punctuation">(</span>parent.name<span class="token punctuation">)</span> - <span class="token punctuation">(</span>sub_tree.depth + <span class="token number">1</span><span class="token punctuation">))</span> AS depth
+FROM nested_category AS node,
+        nested_category AS parent,
+        nested_category AS sub_parent,
+        <span class="token punctuation">(</span>
+                SELECT node.name, <span class="token punctuation">(</span>COUNT<span class="token punctuation">(</span>parent.name<span class="token punctuation">)</span> - <span class="token number">1</span><span class="token punctuation">)</span> AS depth
+                FROM nested_category AS node,
+                nested_category AS parent
+                WHERE node.lft BETWEEN parent.lft AND parent.rgt
+                AND node.name <span class="token operator">=</span> <span class="token string">'PORTABLE ELECTRONICS'</span>
+                GROUP BY node.name
+                ORDER BY node.lft
+        <span class="token punctuation">)</span>AS sub_tree
+WHERE node.lft BETWEEN parent.lft AND parent.rgt
+        AND node.lft BETWEEN sub_parent.lft AND sub_parent.rgt
+        AND sub_parent.name <span class="token operator">=</span> sub_tree.name
+GROUP BY node.name
+ORDER BY node.lft<span class="token punctuation">;</span>
+
++----------------------+-------+
+<span class="token operator">|</span> name                 <span class="token operator">|</span> depth <span class="token operator">|</span>
++----------------------+-------+
+<span class="token operator">|</span> PORTABLE ELECTRONICS <span class="token operator">|</span>     <span class="token number">0</span> <span class="token operator">|</span>
+<span class="token operator">|</span> MP3 PLAYERS          <span class="token operator">|</span>     <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">|</span> FLASH                <span class="token operator">|</span>     <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span> CD PLAYERS           <span class="token operator">|</span>     <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2</span> WAY RADIOS         <span class="token operator">|</span>     <span class="token number">1</span> <span class="token operator">|</span>
++----------------------+-------+
+</code></pre></div><h3 id="노드의-즉각적인-하위-항목-찾기"><a href="#노드의-즉각적인-하위-항목-찾기" class="header-anchor">#</a> 노드의 즉각적인 하위 항목 찾기</h3> <ul><li>상위 노드를 표시하지 않으려면 having depth = 1 로 변경</li></ul> <div class="language-shell script extra-class"><pre class="language-shell"><code>SELECT node.name, <span class="token punctuation">(</span>COUNT<span class="token punctuation">(</span>parent.name<span class="token punctuation">)</span> - <span class="token punctuation">(</span>sub_tree.depth + <span class="token number">1</span><span class="token punctuation">))</span> AS depth
+FROM nested_category AS node,
+        nested_category AS parent,
+        nested_category AS sub_parent,
+        <span class="token punctuation">(</span>
+                SELECT node.name, <span class="token punctuation">(</span>COUNT<span class="token punctuation">(</span>parent.name<span class="token punctuation">)</span> - <span class="token number">1</span><span class="token punctuation">)</span> AS depth
+                FROM nested_category AS node,
+                        nested_category AS parent
+                WHERE node.lft BETWEEN parent.lft AND parent.rgt
+                        AND node.name <span class="token operator">=</span> <span class="token string">'PORTABLE ELECTRONICS'</span>
+                GROUP BY node.name
+                ORDER BY node.lft
+        <span class="token punctuation">)</span>AS sub_tree
+WHERE node.lft BETWEEN parent.lft AND parent.rgt
+        AND node.lft BETWEEN sub_parent.lft AND sub_parent.rgt
+        AND sub_parent.name <span class="token operator">=</span> sub_tree.name
+GROUP BY node.name
+HAVING depth <span class="token operator">&lt;</span><span class="token operator">=</span> <span class="token number">1</span>
+ORDER BY node.lft<span class="token punctuation">;</span>
+
++----------------------+-------+
+<span class="token operator">|</span> name                 <span class="token operator">|</span> depth <span class="token operator">|</span>
++----------------------+-------+
+<span class="token operator">|</span> PORTABLE ELECTRONICS <span class="token operator">|</span>     <span class="token number">0</span> <span class="token operator">|</span>
+<span class="token operator">|</span> MP3 PLAYERS          <span class="token operator">|</span>     <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">|</span> CD PLAYERS           <span class="token operator">|</span>     <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2</span> WAY RADIOS         <span class="token operator">|</span>     <span class="token number">1</span> <span class="token operator">|</span>
++----------------------+-------+
+</code></pre></div><ul><li>중첩 집합의 집계 함수</li></ul> <div class="language-shell script extra-class"><pre class="language-shell"><code>CREATE TABLE product
+<span class="token punctuation">(</span>
+        product_id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR<span class="token punctuation">(</span><span class="token number">40</span><span class="token punctuation">)</span>,
+        category_id INT NOT NULL
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+INSERT INTO product<span class="token punctuation">(</span>name, category_id<span class="token punctuation">)</span> VALUES<span class="token punctuation">(</span><span class="token string">'20&quot; TV'</span>,3<span class="token punctuation">)</span>,<span class="token punctuation">(</span><span class="token string">'36&quot; TV'</span>,3<span class="token punctuation">)</span>,
+<span class="token punctuation">(</span><span class="token string">'Super-LCD 42&quot;'</span>,4<span class="token punctuation">)</span>,<span class="token punctuation">(</span><span class="token string">'Ultra-Plasma 62&quot;'</span>,5<span class="token punctuation">)</span>,<span class="token punctuation">(</span><span class="token string">'Value Plasma 38&quot;'</span>,5<span class="token punctuation">)</span>,
+<span class="token punctuation">(</span><span class="token string">'Power-MP3 5gb'</span>,7<span class="token punctuation">)</span>,<span class="token punctuation">(</span><span class="token string">'Super-Player 1gb'</span>,8<span class="token punctuation">)</span>,<span class="token punctuation">(</span><span class="token string">'Porta CD'</span>,9<span class="token punctuation">)</span>,<span class="token punctuation">(</span><span class="token string">'CD To go!'</span>,9<span class="token punctuation">)</span>,
+<span class="token punctuation">(</span><span class="token string">'Family Talk 360'</span>,10<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+SELECT * FROM product<span class="token punctuation">;</span>
+
++------------+-------------------+-------------+
+<span class="token operator">|</span> product_id <span class="token operator">|</span> name              <span class="token operator">|</span> category_id <span class="token operator">|</span>
++------------+-------------------+-------------+
+<span class="token operator">|</span>          <span class="token number">1</span> <span class="token operator">|</span> <span class="token number">20</span><span class="token string">&quot; TV            |           3 |
+|          2 | 36&quot;</span> TV            <span class="token operator">|</span>           <span class="token number">3</span> <span class="token operator">|</span>
+<span class="token operator">|</span>          <span class="token number">3</span> <span class="token operator">|</span> Super-LCD <span class="token number">42</span><span class="token string">&quot;     |           4 |
+|          4 | Ultra-Plasma 62&quot;</span>  <span class="token operator">|</span>           <span class="token number">5</span> <span class="token operator">|</span>
+<span class="token operator">|</span>          <span class="token number">5</span> <span class="token operator">|</span> Value Plasma <span class="token number">38</span>&quot;  <span class="token operator">|</span>           <span class="token number">5</span> <span class="token operator">|</span>
+<span class="token operator">|</span>          <span class="token number">6</span> <span class="token operator">|</span> Power-MP3 128mb   <span class="token operator">|</span>           <span class="token number">7</span> <span class="token operator">|</span>
+<span class="token operator">|</span>          <span class="token number">7</span> <span class="token operator">|</span> Super-Shuffle 1gb <span class="token operator">|</span>           <span class="token number">8</span> <span class="token operator">|</span>
+<span class="token operator">|</span>          <span class="token number">8</span> <span class="token operator">|</span> Porta CD          <span class="token operator">|</span>           <span class="token number">9</span> <span class="token operator">|</span>
+<span class="token operator">|</span>          <span class="token number">9</span> <span class="token operator">|</span> CD To go<span class="token operator">!</span>         <span class="token operator">|</span>           <span class="token number">9</span> <span class="token operator">|</span>
+<span class="token operator">|</span>         <span class="token number">10</span> <span class="token operator">|</span> Family Talk <span class="token number">360</span>   <span class="token operator">|</span>          <span class="token number">10</span> <span class="token operator">|</span>
++------------+-------------------+-------------+
+</code></pre></div><ul><li>카테고리 트리와 각 카테고리의 제품 수를 검색</li></ul> <div class="language-shell script extra-class"><pre class="language-shell"><code>SELECT parent.name, COUNT<span class="token punctuation">(</span>product.name<span class="token punctuation">)</span>
+FROM nested_category AS node ,
+        nested_category AS parent,
+        product
+WHERE node.lft BETWEEN parent.lft AND parent.rgt
+        AND node.category_id <span class="token operator">=</span> product.category_id
+GROUP BY parent.name
+ORDER BY node.lft<span class="token punctuation">;</span>
+
++----------------------+---------------------+
+<span class="token operator">|</span> name                 <span class="token operator">|</span> COUNT<span class="token punctuation">(</span>product.name<span class="token punctuation">)</span> <span class="token operator">|</span>
++----------------------+---------------------+
+<span class="token operator">|</span> ELECTRONICS          <span class="token operator">|</span>                  <span class="token number">10</span> <span class="token operator">|</span>
+<span class="token operator">|</span> TELEVISIONS          <span class="token operator">|</span>                   <span class="token number">5</span> <span class="token operator">|</span>
+<span class="token operator">|</span> TUBE                 <span class="token operator">|</span>                   <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span> LCD                  <span class="token operator">|</span>                   <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">|</span> PLASMA               <span class="token operator">|</span>                   <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span> PORTABLE ELECTRONICS <span class="token operator">|</span>                   <span class="token number">5</span> <span class="token operator">|</span>
+<span class="token operator">|</span> MP3 PLAYERS          <span class="token operator">|</span>                   <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span> FLASH                <span class="token operator">|</span>                   <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">|</span> CD PLAYERS           <span class="token operator">|</span>                   <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2</span> WAY RADIOS         <span class="token operator">|</span>                   <span class="token number">1</span> <span class="token operator">|</span>
++----------------------+---------------------+
+</code></pre></div><h3 id="새-노드-추가"><a href="#새-노드-추가" class="header-anchor">#</a> 새 노드 추가</h3> <ul><li>TELEVISIONS와 PORTABLE ELECTRONICS 노드 사이에 새 노드를 추가</li> <li>새 노드의 lft rgt 는 10, 11 이고 오른쪽의 모든 노드의 lft, rgt 값이 2씩 증가한다.</li></ul> <div class="language-shell script extra-class"><pre class="language-shell"><code>LOCK TABLE nested_category WRITE<span class="token punctuation">;</span>
+
+SELECT @myRight :<span class="token operator">=</span> rgt FROM nested_category
+WHERE name <span class="token operator">=</span> <span class="token string">'TELEVISIONS'</span><span class="token punctuation">;</span>
+
+UPDATE nested_category SET rgt <span class="token operator">=</span> rgt + <span class="token number">2</span> WHERE rgt <span class="token operator">&gt;</span> @myRight<span class="token punctuation">;</span>
+UPDATE nested_category SET lft <span class="token operator">=</span> lft + <span class="token number">2</span> WHERE lft <span class="token operator">&gt;</span> @myRight<span class="token punctuation">;</span>
+
+INSERT INTO nested_category<span class="token punctuation">(</span>name, lft, rgt<span class="token punctuation">)</span> VALUES<span class="token punctuation">(</span><span class="token string">'GAME CONSOLES'</span>, @myRight + <span class="token number">1</span>, @myRight + <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+UNLOCK TABLES<span class="token punctuation">;</span>
+</code></pre></div><div class="language-shell script extra-class"><pre class="language-shell"><code>SELECT CONCAT<span class="token punctuation">(</span> REPEAT<span class="token punctuation">(</span> <span class="token string">' '</span>, <span class="token punctuation">(</span>COUNT<span class="token punctuation">(</span>parent.name<span class="token punctuation">)</span> - <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>, node.name<span class="token punctuation">)</span> AS name
+FROM nested_category AS node,
+        nested_category AS parent
+WHERE node.lft BETWEEN parent.lft AND parent.rgt
+GROUP BY node.name
+ORDER BY node.lft<span class="token punctuation">;</span>
+
++-----------------------+
+<span class="token operator">|</span> name                  <span class="token operator">|</span>
++-----------------------+
+<span class="token operator">|</span> ELECTRONICS           <span class="token operator">|</span>
+<span class="token operator">|</span>  TELEVISIONS          <span class="token operator">|</span>
+<span class="token operator">|</span>   TUBE                <span class="token operator">|</span>
+<span class="token operator">|</span>   LCD                 <span class="token operator">|</span>
+<span class="token operator">|</span>   PLASMA              <span class="token operator">|</span>
+<span class="token operator">|</span>  GAME CONSOLES        <span class="token operator">|</span>
+<span class="token operator">|</span>  PORTABLE ELECTRONICS <span class="token operator">|</span>
+<span class="token operator">|</span>   MP3 PLAYERS         <span class="token operator">|</span>
+<span class="token operator">|</span>    FLASH              <span class="token operator">|</span>
+<span class="token operator">|</span>   CD PLAYERS          <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">2</span> WAY RADIOS        <span class="token operator">|</span>
++-----------------------+
+</code></pre></div><ul><li>기존 자식이 없는 노드의 자식으로 노드를 추가하는 절차</li></ul> <div class="language-shell script extra-class"><pre class="language-shell"><code>LOCK TABLE nested_category WRITE<span class="token punctuation">;</span>
+
+SELECT @myLeft :<span class="token operator">=</span> lft FROM nested_category
+
+WHERE name <span class="token operator">=</span> <span class="token string">'2 WAY RADIOS'</span><span class="token punctuation">;</span>
+
+UPDATE nested_category SET rgt <span class="token operator">=</span> rgt + <span class="token number">2</span> WHERE rgt <span class="token operator">&gt;</span> @myLeft<span class="token punctuation">;</span>
+UPDATE nested_category SET lft <span class="token operator">=</span> lft + <span class="token number">2</span> WHERE lft <span class="token operator">&gt;</span> @myLeft<span class="token punctuation">;</span>
+
+INSERT INTO nested_category<span class="token punctuation">(</span>name, lft, rgt<span class="token punctuation">)</span> VALUES<span class="token punctuation">(</span><span class="token string">'FRS'</span>, @myLeft + <span class="token number">1</span>, @myLeft + <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+UNLOCK TABLES<span class="token punctuation">;</span>
+</code></pre></div><ul><li>부모 노드는 삭제하지만 자식은 삭제하지 않는것. 하위 노드는 모두 삭제된 상위 레벨로 이동</li></ul> <div class="language-shell script extra-class"><pre class="language-shell"><code>LOCK TABLE nested_category WRITE<span class="token punctuation">;</span>
+
+SELECT @myLeft :<span class="token operator">=</span> lft, @myRight :<span class="token operator">=</span> rgt, @myWidth :<span class="token operator">=</span> rgt - lft + <span class="token number">1</span>
+FROM nested_category
+WHERE name <span class="token operator">=</span> <span class="token string">'PORTABLE ELECTRONICS'</span><span class="token punctuation">;</span>
+
+DELETE FROM nested_category WHERE lft <span class="token operator">=</span> @myLeft<span class="token punctuation">;</span>
+
+UPDATE nested_category SET rgt <span class="token operator">=</span> rgt - <span class="token number">1</span>, lft <span class="token operator">=</span> lft - <span class="token number">1</span> WHERE lft BETWEEN @myLeft AND @myRight<span class="token punctuation">;</span>
+UPDATE nested_category SET rgt <span class="token operator">=</span> rgt - <span class="token number">2</span> WHERE rgt <span class="token operator">&gt;</span> @myRight<span class="token punctuation">;</span>
+UPDATE nested_category SET lft <span class="token operator">=</span> lft - <span class="token number">2</span> WHERE lft <span class="token operator">&gt;</span> @myRight<span class="token punctuation">;</span>
+
+UNLOCK TABLES<span class="token punctuation">;</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+    ←
+    <a href="/TIL/development/SQL/SQL_Cheat_Sheet.html" class="prev">SQL Cheat Sheet</a></span> <span class="next"><a href="/TIL/development/Java/Mac_Java_여러버전설치.html">Mac에 Java 여러 버전 설치 &amp; 사용하기</a>
+    →
+  </span></p></div> </main></div> <div><div id="comment"></div></div> <footer class="siteFooter">
+        © 개발자가 되고 싶은 은영이
+    </footer></div><div class="global-ui"></div></div>
+    <script src="/TIL/assets/js/app.5a4e5c77.js" defer></script><script src="/TIL/assets/js/3.a0601c32.js" defer></script><script src="/TIL/assets/js/2.fbb9d6f8.js" defer></script><script src="/TIL/assets/js/4.66ba9c00.js" defer></script><script src="/TIL/assets/js/12.8a097140.js" defer></script>
+  </body>
+</html>
