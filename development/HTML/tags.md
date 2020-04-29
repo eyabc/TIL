@@ -194,7 +194,7 @@ html5에서 제거됨.
 </blockquote>
 ```
 
-code,
+code
 del,
 dfn,
 em,
